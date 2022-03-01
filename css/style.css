@@ -31,3 +31,6 @@ i{
    color:white;
    font-weight: bold;
 }
+.modal { 
+   overflow-y: auto !important; 
+}
