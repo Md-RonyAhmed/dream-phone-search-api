@@ -20,7 +20,7 @@ const displayPhones = (phones) => {
       const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
-      <div class="card w-75 mx-auto p-3 bg-color">
+      <div class="card w-100 mx-auto p-3 bg-color">
   <img src="${phone.image}" class="card-img-top" alt="phone image">
   <div class="card-body">
     <h5 class="card-title">${phone.brand}</h5>
@@ -52,16 +52,35 @@ const displayPhoneDetails = phoneInfo => {
      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
    </div>
    <div>
-   <div class="w-75 my-4 mx-auto">
+   <div class="w-50 my-4 mx-auto">
     <img src="${phoneInfo.image}" class="card-img-top" alt="phone image">
    </div>
-     <h3>Brand: ${phoneInfo.brand}</h3>
-     <h5>Name: ${phoneInfo.name}</h5>
+     <div class="p-3">
+         <h3>Brand: ${phoneInfo.brand}</h3>
+         <h4>Model Name: ${phoneInfo.name}</h4>
+         <small>${phoneInfo?.releaseDate ? phoneInfo.releaseDate:'Released date not available'} </small>
+     </div>
+     <div class="p-3">
+          <h4>Main Features:</h4>
+          <p><span class="fw-bold">Storage:</span> ${phoneInfo.mainFeatures.storage}</p>
+          <p><span class="fw-bold">Display Size:</span> ${phoneInfo.mainFeatures.displaySize}</p>
+          <p><span class="fw-bold">Chip-set:</span> ${phoneInfo.mainFeatures.chipSet}</p>
+          <p><span class="fw-bold">Memory:</span> ${phoneInfo.mainFeatures.memory}</p>
+          <p><span class="fw-bold">Sensors:</span> ${phoneInfo.mainFeatures.sensors}</p>
+          <h4>Others:</h4>
+          <p><span class="fw-bold">WLAN:</span> ${phoneInfo.mainFeatures?.others?.WLAN ? phoneInfo.mainFeatures.others.WLAN: ' WLAN not available right now'}</p>
+          <p><span class="fw-bold">Bluetooth:</span> ${phoneInfo.mainFeatures?.others?.Bluetooth ? phoneInfo.mainFeatures.others.Bluetooth: 'Bluetooth not available right now'}</p>
+          <p><span class="fw-bold">GPS:</span> ${phoneInfo.mainFeatures?.others?.GPS ? phoneInfo.mainFeatures.others.GPS: 'GPS not available right now'}</p>
+          <p><span class="fw-bold">NFC</span> ${phoneInfo.mainFeatures?.others?.NFC ? phoneInfo.mainFeatures.others.NFC: 'NFC not available right now'}</p>
+          <p><span class="fw-bold">Radio:</span> ${phoneInfo.mainFeatures?.others?.Radio ? phoneInfo.mainFeatures.others.Radio: 'Radio not available right now'}</p>
+          <p><span class="fw-bold">USB:</span> ${phoneInfo.mainFeatures?.others?.USB ? phoneInfo.mainFeatures.others.USB: 'USB not available right now'}</p>
+     </div>
    </div>
    <div class="modal-footer">
         <button type="button" class="btn btn-color" data-bs-dismiss="modal">Close</button>
    </div>
    `;
+   // console.log(phoneInfo.mainFeatures.others.Bluetooth)
    modalContainer.textContent = "";
    modalContainer.appendChild(div);
 }
