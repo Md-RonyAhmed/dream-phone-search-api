@@ -34,10 +34,17 @@
             </button>
         </div>
     </div>
-
+    
     <!-- display phones area  -->
     <div class="container">
         <div id="search-result" class="row row-cols-1 row-cols-md-3 gy-5"></div>
+    </div>
+    
+    <!-- Spinner  -->
+    <div class="d-none text-center justify-content-center mt-5 pt-5" id="spinner">
+        <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 
     <!-- Display phone details in modal -->
@@ -53,8 +60,9 @@
     <div class="my-5 w-50 mx-auto">
         <h4 id="error-message" class="text-danger bg-warning rounded-2 text-center p-2">Something went wrong please try again later...</h4>
         <h4 id="null-error" class="text-danger bg-warning rounded-2 text-center p-2">Can't display null value try again...</h4>
-    <div class="my-5 w-100 mx-auto">
+     <div class="my-5 w-100 mx-auto">
         <h4 id="invalid" class="text-danger bg-warning rounded-2 text-center p-2">The searched value is unavailable or invalid typing...</h4>
+     </div>
     </div>
 
     <!-- bootstrap js link  -->
