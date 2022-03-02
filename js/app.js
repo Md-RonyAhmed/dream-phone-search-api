@@ -1,6 +1,12 @@
 document.getElementById("error-message").style.display = "none";
 document.getElementById("null-error").style.display = "none";
 document.getElementById("invalid").style.display = "none";
+// spinner 
+function spinnerControl(remove, add) {
+  const spinner = document.getElementById("spinner");
+  spinner.classList.remove(remove);
+  spinner.classList.add(add);
+}
 // Handle Search button
 const searchField = document.getElementById("search-field");
 
@@ -14,6 +20,8 @@ const loadPhones = () => {
       searchResult.textContent = "";
       return;
    }
+   // spinner
+   spinnerControl("d-none", "d-block");
    // clear data
    searchField.value = "";
    fetch(url)
@@ -30,6 +38,8 @@ const displayError = error => {
 //   Display phones
 const displayPhones = phones => {
    const searchResult = document.getElementById("search-result");
+   // spinner 
+   spinnerControl("d-block", "d-none");
    searchResult.textContent = "";
    if (phones.length === 0) {
       document.getElementById("invalid").style.display = "block";
