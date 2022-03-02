@@ -34,3 +34,7 @@ i{
 .modal { 
    overflow-y: auto !important; 
 }
+
+.bg-modal{
+   background-color:rgba(224, 255, 255, 0.671);
+}
