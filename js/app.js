@@ -23,12 +23,12 @@ const loadPhones = () => {
 };
 
 // display error message
-const displayError = (error) => {
+const displayError = error => {
    document.getElementById("error-message").style.display = "block";
 };
 
 //   Display phones
-const displayPhones = (phones) => {
+const displayPhones = phones => {
    const searchResult = document.getElementById("search-result");
    searchResult.textContent = "";
    if (phones.length === 0) {
@@ -37,7 +37,7 @@ const displayPhones = (phones) => {
       searchResult.textContent = "";
       return;
    }
-   phones?.slice(0, 20).forEach((phone) => {
+   phones?.slice(0, 20).forEach(phone => {
       //   console.log(phone.phone_name);
       const div = document.createElement("div");
       div.classList.add("col");
@@ -58,15 +58,15 @@ const displayPhones = (phones) => {
 };
 
 // display phone details
-const phoneDetails = (phoneID) => {
+const phoneDetails = phoneID => {
    // console.log(phoneID);
    const url = `https://openapi.programming-hero.com/api/phone/${phoneID}`;
    fetch(url)
       .then((res) => res.json())
       .then((data) => displayPhoneDetails(data.data));
 };
-
-const displayPhoneDetails = (phoneInfo) => {
+// display phone details function
+const displayPhoneDetails = phoneInfo => {
    const modalContainer = document.getElementById("modal-dialog-box");
    const div = document.createElement("div");
    div.innerHTML = `
