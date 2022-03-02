@@ -1,25 +1,47 @@
+document.getElementById("error-message").style.display = "none";
+document.getElementById("null-error").style.display = "none";
+document.getElementById("invalid").style.display = "none";
 // Handle Search button
 const searchField = document.getElementById("search-field");
+
 // Load Phone API
 const loadPhones = () => {
    const url = `https://openapi.programming-hero.com/api/phones?search=${searchField.value}`;
-
+   if (searchField.value === "") {
+      document.getElementById("null-error").style.display = "block";
+      document.getElementById("invalid").style.display = "none";
+      displayPhones();
+      searchResult.textContent = "";
+      return;
+   }
    // clear data
-    searchField.value = '';
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => displayPhones(data.data));
+   searchField.value = "";
+   fetch(url)
+      .then((res) => res.json())
+      .then((data) => displayPhones(data.data))
+      .catch((error) => displayError(error));
+};
+
+// display error message
+const displayError = (error) => {
+   document.getElementById("error-message").style.display = "block";
 };
 
 //   Display phones
 const displayPhones = (phones) => {
    const searchResult = document.getElementById("search-result");
-   searchResult.textContent = '';
-  phones.slice(0, 20).forEach((phone) => {
-   //   console.log(phone.phone_name);
-      const div = document.createElement('div');
-    div.classList.add('col');
-    div.innerHTML = `
+   searchResult.textContent = "";
+   if (phones.length === 0) {
+      document.getElementById("invalid").style.display = "block";
+      document.getElementById("null-error").style.display = "none";
+      searchResult.textContent = "";
+      return;
+   }
+   phones?.slice(0, 20).forEach((phone) => {
+      //   console.log(phone.phone_name);
+      const div = document.createElement("div");
+      div.classList.add("col");
+      div.innerHTML = `
       <div class="card w-100 mx-auto p-3 bg-color">
   <img src="${phone.image}" class="card-img-top" alt="phone image">
   <div class="card-body">
@@ -30,10 +52,13 @@ const displayPhones = (phones) => {
 </div>
       `;
       searchResult.appendChild(div);
-  });
+   });
+   document.getElementById("null-error").style.display = "none";
+   document.getElementById("invalid").style.display = "none";
 };
-// display phone details 
-const phoneDetails = phoneID => {
+
+// display phone details
+const phoneDetails = (phoneID) => {
    // console.log(phoneID);
    const url = `https://openapi.programming-hero.com/api/phone/${phoneID}`;
    fetch(url)
@@ -41,11 +66,9 @@ const phoneDetails = phoneID => {
       .then((data) => displayPhoneDetails(data.data));
 };
 
-const displayPhoneDetails = phoneInfo => {
-   // console.log(phoneInfo.brand);
+const displayPhoneDetails = (phoneInfo) => {
    const modalContainer = document.getElementById("modal-dialog-box");
    const div = document.createElement("div");
-   // div.classList.add("row");
    div.innerHTML = `
    <div class="modal-header">
      <h3 class="modal-title" id="phone-details">Phone Details</h3>
@@ -58,7 +81,10 @@ const displayPhoneDetails = phoneInfo => {
      <div class="p-3">
          <h3>Brand: ${phoneInfo.brand}</h3>
          <h4>Model Name: ${phoneInfo.name}</h4>
-         <small>${phoneInfo?.releaseDate ? phoneInfo.releaseDate:'Released date not available'} </small>
+         <small>${phoneInfo?.releaseDate
+         ? phoneInfo.releaseDate
+         : "Released date not available"
+      } </small>
      </div>
      <div class="p-3">
           <h4>Main Features:</h4>
@@ -68,19 +94,33 @@ const displayPhoneDetails = phoneInfo => {
           <p><span class="fw-bold">Memory:</span> ${phoneInfo.mainFeatures.memory}</p>
           <p><span class="fw-bold">Sensors:</span> ${phoneInfo.mainFeatures.sensors}</p>
           <h4>Others:</h4>
-          <p><span class="fw-bold">WLAN:</span> ${phoneInfo.mainFeatures?.others?.WLAN ? phoneInfo.mainFeatures.others.WLAN: ' WLAN not available right now'}</p>
-          <p><span class="fw-bold">Bluetooth:</span> ${phoneInfo.mainFeatures?.others?.Bluetooth ? phoneInfo.mainFeatures.others.Bluetooth: 'Bluetooth not available right now'}</p>
-          <p><span class="fw-bold">GPS:</span> ${phoneInfo.mainFeatures?.others?.GPS ? phoneInfo.mainFeatures.others.GPS: 'GPS not available right now'}</p>
-          <p><span class="fw-bold">NFC</span> ${phoneInfo.mainFeatures?.others?.NFC ? phoneInfo.mainFeatures.others.NFC: 'NFC not available right now'}</p>
-          <p><span class="fw-bold">Radio:</span> ${phoneInfo.mainFeatures?.others?.Radio ? phoneInfo.mainFeatures.others.Radio: 'Radio not available right now'}</p>
-          <p><span class="fw-bold">USB:</span> ${phoneInfo.mainFeatures?.others?.USB ? phoneInfo.mainFeatures.others.USB: 'USB not available right now'}</p>
+          <p><span class="fw-bold">WLAN:</span> ${phoneInfo.others?.WLAN ? phoneInfo.others.WLAN : "WLAN not available right now"}</p>
+          <p><span class="fw-bold">Bluetooth:</span> ${phoneInfo.others?.Bluetooth
+         ? phoneInfo.others.Bluetooth
+         : "Bluetooth not available right now"
+      }</p>
+          <p><span class="fw-bold">GPS:</span> ${phoneInfo.others?.GPS
+         ? phoneInfo.others.GPS
+         : "GPS not available right now"
+      }</p>
+          <p><span class="fw-bold">NFC:</span> ${phoneInfo.others?.NFC
+         ? phoneInfo.others.NFC
+         : "NFC not available right now"
+      }</p>
+          <p><span class="fw-bold">Radio:</span> ${phoneInfo.others?.Radio
+         ? phoneInfo.others.Radio
+         : "Radio not available right now"
+      }</p>
+          <p><span class="fw-bold">USB:</span> ${phoneInfo.others?.USB
+         ? phoneInfo.others.USB
+         : "USB not available right now"
+      }</p>
      </div>
    </div>
    <div class="modal-footer">
         <button type="button" class="btn btn-color" data-bs-dismiss="modal">Close</button>
    </div>
    `;
-   // console.log(phoneInfo.mainFeatures.others.Bluetooth)
    modalContainer.textContent = "";
    modalContainer.appendChild(div);
-}
+};
